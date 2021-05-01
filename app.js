@@ -1,9 +1,15 @@
 const express = require('express');
+const mysql = require('mysql2');
 
 const app = express();
+const db = require('./models');
 
-app.get("/", (req, res) => {
-    res.send("hi");
+app.get('/', (req, res) => {
+    res.send("Hello world");
 })
 
-app.listen(8080, () => console.log("Server is running!"));
+db.sequelize.sync().then((req) => {
+    app.listen(8080, () => {
+        console.log("Server is running!");
+    });
+});
